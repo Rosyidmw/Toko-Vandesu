@@ -73,6 +73,19 @@ if (isset($_POST['deleteBtn'])) {
     <title>Detail Kategori</title>
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../fontawesome/css/fontawesome.min.css">
+    <style>
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    main {
+        flex: 1;
+        overflow-y: auto;
+        /* Biarkan konten dapat di-scroll jika lebih panjang dari tinggi layar */
+    }
+    </style>
 </head>
 
 <body>
@@ -104,6 +117,8 @@ if (isset($_POST['deleteBtn'])) {
         </div>
     </div>
 
+    <!-- footer -->
+    <?php require "footer.php"; ?>
     <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../fontawesome/js/all.min.js"></script>
 </body>

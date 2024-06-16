@@ -32,6 +32,18 @@ function generateRandomString($length = 10)
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../fontawesome/css/fontawesome.min.css">
     <style>
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    main {
+        flex: 1;
+        overflow-y: auto;
+        /* Biarkan konten dapat di-scroll jika lebih panjang dari tinggi layar */
+    }
+
     .no-decoration {
         text-decoration: none;
     }
@@ -128,7 +140,7 @@ function generateRandomString($length = 10)
                     if ($nama_file != '') {
                         $image_size = $_FILES["foto"]["size"];
                         if ($image_size > 5000000) {
-                ?>
+                    ?>
             <div class="alert alert-warning mt-3" role="alert">
                 File tidak boleh lebih dari 500 Kb
             </div>
@@ -153,7 +165,7 @@ function generateRandomString($length = 10)
                     $queryTambah = mysqli_query($con, "INSERT INTO produk (kategori_id, nama, harga, foto, detail, ketersediaan_stok) VALUES ('$kategori', '$nama', '$harga', '$new_name', '$detail', '$ketersediaan_stok')");
 
                     if ($queryTambah) {
-                    ?>
+                        ?>
             <div class="alert alert-primary mt-3" role="alert">
                 Produk Berhasil Tersimpan
             </div>
@@ -194,7 +206,7 @@ function generateRandomString($length = 10)
                         } else {
                             $nomor = 1;
                             while ($data = mysqli_fetch_array($query)) {
-                        ?>
+                            ?>
                         <tr>
                             <td><?php echo $nomor; ?></td>
                             <td><?php echo $data['nama']; ?></td>
@@ -217,6 +229,8 @@ function generateRandomString($length = 10)
         </div>
     </div>
 
+    <!-- footer -->
+    <?php require "footer.php"; ?>
     <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../fontawesome/js/all.min.js"></script>
 </body>

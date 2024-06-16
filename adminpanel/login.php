@@ -12,22 +12,21 @@ require "../koneksi.php";
     <title>Login</title>
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
     <style>
-    .main {
-        height: 100vh;
-        background-image: url('../image/banner-login.webp');
-        background-size: cover;
-        background-position: center;
-    }
+        .main {
+            height: 100vh;
+            background-image: url('../image/banner-login.webp');
+            background-size: cover;
+            background-position: center;
+        }
 
-    .login-box {
-        width: 500px;
-        box-sizing: border-box;
-        border-radius: 10px;
-        background: #fff;
-        padding: 20px;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 6px 6px rgba(0, 0, 0, 0.2);
-        /* Enhanced shadow */
-    }
+        .login-box {
+            width: 500px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 6px 6px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 

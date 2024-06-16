@@ -19,26 +19,39 @@ $jumlahProduk = mysqli_num_rows($queryProduk);
     <title>Home</title>
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <style>
-    .kotak {
-        border: solid;
-    }
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
-    .summary-kategori {
-        background-color: #0a6b4a;
-        border-radius: 15px;
-    }
+main {
+    flex: 1;
+    overflow-y: auto;
+    /* Biarkan konten dapat di-scroll jika lebih panjang dari tinggi layar */
+}
 
-    .summary-produk {
-        background-color: #0a516b;
-        border-radius: 15px;
-    }
+.kotak {
+    border: solid;
+}
 
-    .no-decoration {
-        text-decoration: none;
-    }
+.summary-kategori {
+    background-color: #0a6b4a;
+    border-radius: 15px;
+}
+
+.summary-produk {
+    background-color: #0a516b;
+    border-radius: 15px;
+}
+
+.no-decoration {
+    text-decoration: none;
+}
 </style>
 
 <body>
@@ -88,7 +101,8 @@ $jumlahProduk = mysqli_num_rows($queryProduk);
         </div>
     </div>
 
-
+    <!-- footer -->
+    <?php require "footer.php"; ?>
     <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../fontawesome/js/all.min.js"></script>
 </body>
