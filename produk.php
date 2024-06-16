@@ -1,5 +1,12 @@
 <?php
 require "koneksi.php";
+
+// Fungsi untuk memformat harga
+function formatRupiah($angka)
+{
+    return number_format($angka, 0, ',', '.');
+}
+
 $queryKategori = mysqli_query($con, "SELECT * FROM kategori");
 
 // get produk by nama produk/keyword
@@ -51,9 +58,9 @@ $countData = mysqli_num_rows($queryProduk);
                 <h3>Kategori</h3>
                 <ul class="list-group">
                     <?php while ($Kategori = mysqli_fetch_array($queryKategori)) { ?>
-                        <a class="no-decoration" href="produk.php?kategori=<?php echo $Kategori['nama']; ?>">
-                            <li class="list-group-item"><?php echo $Kategori['nama']; ?></li>
-                        </a>
+                    <a class="no-decoration" href="produk.php?kategori=<?php echo $Kategori['nama']; ?>">
+                        <li class="list-group-item"><?php echo $Kategori['nama']; ?></li>
+                    </a>
                     <?php } ?>
                 </ul>
             </div>
@@ -64,26 +71,27 @@ $countData = mysqli_num_rows($queryProduk);
                     <?php
                     if ($countData < 1) {
                     ?>
-                        <h4 class="text-center my-5">Produk yang anda cari tidak tersedia!</h4>
+                    <h4 class="text-center my-5">Produk yang anda cari tidak tersedia!</h4>
                     <?php
                     }
                     ?>
 
                     <?php while ($produk = mysqli_fetch_array($queryProduk)) { ?>
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100">
-                                <div class="image-box">
-                                    <img src="image/<?php echo $produk['foto']; ?>" class="card-img-top" alt="...">
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title"><?php echo $produk['nama']; ?></h4>
-                                    <p class="card-text text-truncate"><?php echo $produk['detail']; ?></p>
-                                    <p class="card-text text-harga">Rp <?php echo $produk['harga']; ?></p>
-                                    <a href="produk-detail.php?nama=<?php echo $produk['nama']; ?>" class="btn warna2 text-white">Lihat
-                                        Detail</a>
-                                </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="image-box">
+                                <img src="image/<?php echo $produk['foto']; ?>" class="card-img-top" alt="...">
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title"><?php echo $produk['nama']; ?></h4>
+                                <p class="card-text text-truncate"><?php echo $produk['detail']; ?></p>
+                                <p class="card-text text-harga">Rp <?php echo formatRupiah($produk['harga']); ?></p>
+                                <a href="produk-detail.php?nama=<?php echo $produk['nama']; ?>"
+                                    class="btn warna2 text-white">Lihat
+                                    Detail</a>
                             </div>
                         </div>
+                    </div>
                     <?php } ?>
                 </div>
             </div>

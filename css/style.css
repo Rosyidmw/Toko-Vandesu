@@ -1,71 +1,114 @@
+@font-face {
+    font-family: 'RussoOne';
+    src: url('../fonts/RussoOne-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'RussoOne', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'RussoOne', sans-serif;
+}
+
+p,
+span,
+div {
+    font-family: 'RussoOne', sans-serif;
+}
+
 .warna1 {
-    background-color: #96B6C5;
+    background-color: #EEEEEE;
 }
 
 .warna2 {
-    background-color: #ADC4CE;
+    background-color: #686D76;
 }
 
 .warna3 {
-    background-color: #EEE0C9;
+    background-color: #373A40;
 }
 
 .warna4 {
-    background-color: #F1F0E8;
+    background-color: #DC5F00;
 }
 
 .nav-link {
-    color: #FFFFFF !important; 
-    padding: 10px 15px; 
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); 
+    color: #FFFFFF !important;
+    padding: 10px 15px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    /* Added transition */
 }
 
 .nav-link:hover {
     color: #FFD4BE !important;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    /* Added text shadow on hover */
 }
 
-.banner{
-    height: 80vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(../image/banner.jpg);
+.banner {
+    height: 60vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(../image/banner2.jpg);
     background-size: cover;
     background-position: center;
 }
 
-.highlighted-kategori{
+.highlighted-kategori {
     height: 250px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* Added transition */
 }
 
-.kategori-baju-pria{
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(../image/baju-pria.jpg);
-    background-size: cover;
-    background-position: center;
-}
-.kategori-baju-wanita{
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(../image/baju-wanita.jpeg);
-    background-size: cover;
-    background-position: center;
-}
-.kategori-sepatu{
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(../image/sepatu.jpg);
+.kategori-baju-pria {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../image/baju-pria.jpg);
     background-size: cover;
     background-position: center;
 }
 
-.no-decoration{
+.kategori-baju-wanita {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../image/baju-wanita.jpeg);
+    background-size: cover;
+    background-position: center;
+}
+
+.kategori-sepatu {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../image/sepatu.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+.highlighted-kategori:hover {
+    transform: scale(1.05);
+    /* Scale up on hover */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    /* Add shadow on hover */
+}
+
+.no-decoration {
     text-decoration: none;
     color: white;
+    transition: color 0.3s ease;
+    /* Added transition */
 }
 
-.no-decoration:hover{
+.no-decoration:hover {
     color: #ee7474;
 }
 
-.text-harga{
+.text-harga {
     font-size: 22px;
     color: #CA965C;
 }
 
-.image-box{
+.image-box {
     height: 250px;
 }
 
@@ -76,24 +119,87 @@
     object-position: center;
 }
 
-.content-subscribe{
+.content-subscribe {
     background-color: rgba(0, 0, 0, 0.7);
 }
 
-.content-subscribe a{
+.content-subscribe a {
     color: #fff;
 }
 
-.banner2{
-    height: 45vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(../image/banner.jpg);
+.banner2 {
+    height: 30vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(../image/banner2.jpg);
     background-size: cover;
     background-position: center;
 }
 
-.produk-terkait-image{
+.produk-terkait-image {
     height: 100%;
     width: 100%;
     object-fit: cover;
     object-position: center;
+}
+
+/* Animasi hover untuk card produk */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* Added transition */
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    /* Move up on hover */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    /* Add shadow on hover */
+}
+
+/* Animasi hover untuk button */
+.btn {
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Added transition */
+}
+
+.btn:hover {
+    background-color: #FFD4BE !important;
+    /* Change background color on hover */
+    color: #000 !important;
+    /* Change text color on hover */
+}
+
+.social-link {
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-link:hover {
+    transform: scale(1.2);
+    color: #FFD4BE;
+    /* Optional: Change color on hover */
+}
+
+/* Optional: Add specific color on hover for each social media link */
+.social-link:hover .fa-instagram {
+    color: #C13584;
+}
+
+.social-link:hover .fa-tiktok {
+    color: #69C9D0;
+}
+
+.social-link:hover .fa-whatsapp {
+    color: #25D366;
+}
+
+.element-animasi {
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Efek transisi untuk transformasi dan opacity */
+}
+
+.scroll-down {
+    transform: translateY(100px); /* Geser elemen ke bawah */
+    opacity: 0; /* Hilangkan elemen */
+}
+
+.scroll-up {
+    transform: translateY(-100px); /* Geser elemen ke atas */
+    opacity: 0; /* Hilangkan elemen */
 }

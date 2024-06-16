@@ -11,22 +11,23 @@ require "../koneksi.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
     <style>
-        .main {
-            height: 100vh;
-            background-image: url('../image/banner-login.webp');
-            background-size: cover;
-            background-position: center;
-        }
+    .main {
+        height: 100vh;
+        background-image: url('../image/banner-login.webp');
+        background-size: cover;
+        background-position: center;
+    }
 
-        .login-box {
-            width: 500px;
-            box-sizing: border-box;
-            border-radius: 10px;
-            background: #fff;
-            padding: 20px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 6px 6px rgba(0, 0, 0, 0.2);
-        }
+    .login-box {
+        width: 500px;
+        box-sizing: border-box;
+        border-radius: 10px;
+        background: #fff;
+        padding: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 6px 6px rgba(0, 0, 0, 0.2);
+    }
     </style>
 </head>
 
@@ -44,7 +45,7 @@ require "../koneksi.php";
                     <input type="password" class="form-control" name="password" id="password" required>
                 </div>
                 <div>
-                    <button class="btn btn-success form-control mt-3" type="submit" name="loginbtn">Login</button>
+                    <button class="btn warna1 form-control mt-3" type="submit" name="loginbtn">Login</button>
                 </div>
             </form>
         </div>

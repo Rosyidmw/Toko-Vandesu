@@ -42,6 +42,7 @@ if (isset($_POST['simpan_kategori'])) {
     <title>Kategori</title>
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
     <style>
     body {
         display: flex;
@@ -53,6 +54,14 @@ if (isset($_POST['simpan_kategori'])) {
         flex: 1;
         overflow-y: auto;
         /* Biarkan konten dapat di-scroll jika lebih panjang dari tinggi layar */
+    }
+
+    .nav-link {
+        color: #FFFFFF !important;
+        padding: 10px 15px;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        transition: color 0.3s ease, text-shadow 0.3s ease;
+        /* Added transition */
     }
 
     .no-decoration {
@@ -73,29 +82,25 @@ if (isset($_POST['simpan_kategori'])) {
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="../adminpanel/" class="no-decoration text-muted"><i
-                            class="fas fa-home"></i> Home</a></li>
+                            class="fas fa-home"></i>Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Kategori</li>
             </ol>
         </nav>
 
         <div class="row">
             <div class="col-md-6">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h3 class="card-title">Tambah Kategori</h3>
-                        <form action="" method="post">
-                            <div class="mb-3">
-                                <label for="kategori" class="form-label">Nama Kategori</label>
-                                <input type="text" name="kategori" class="form-control"
-                                    placeholder="Input nama kategori" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary" name="simpan_kategori">Simpan</button>
-                        </form>
+                <h3>Tambah Kategori</h3>
+                <form action="" method="post">
+                    <div class="mb-3">
+                        <label for="kategori" class="form-label">Nama Kategori</label>
+                        <input type="text" name="kategori" class="form-control" placeholder="Input nama kategori"
+                            required>
                     </div>
-                </div>
+                    <button type="submit" class="btn btn-primary" name="simpan_kategori">Simpan</button>
+                </form>
 
                 <?php if (isset($pesan)) { ?>
-                <div class="alert alert-<?php echo $alertType; ?> alert-container" role="alert">
+                <div class="alert alert-<?php echo $alertType; ?> alert-container mt-3" role="alert">
                     <?php echo $pesan; ?>
                 </div>
                 <?php } ?>
@@ -104,6 +109,9 @@ if (isset($_POST['simpan_kategori'])) {
             <div class="col-md-6">
                 <h3>List Kategori</h3>
 
+                <?php if ($jumlahKategori == 0) { ?>
+                <p>Data kategori tidak tersedia.</p>
+                <?php } else { ?>
                 <div class="table-responsive mt-3">
                     <table class="table table-striped table-bordered">
                         <thead>
@@ -114,13 +122,10 @@ if (isset($_POST['simpan_kategori'])) {
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if ($jumlahKategori == 0) { ?>
-                            <tr>
-                                <td colspan="3" class="text-center">Data kategori tidak tersedia</td>
-                            </tr>
-                            <?php } else {
+                            <?php
                                 $nomor = 1;
-                                while ($data = mysqli_fetch_array($queryKategori)) { ?>
+                                while ($data = mysqli_fetch_array($queryKategori)) {
+                                ?>
                             <tr>
                                 <td><?php echo $nomor++; ?></td>
                                 <td><?php echo $data['nama']; ?></td>
@@ -129,11 +134,13 @@ if (isset($_POST['simpan_kategori'])) {
                                             class="fas fa-search"></i></a>
                                 </td>
                             </tr>
-                            <?php }
-                            } ?>
+                            <?php
+                                }
+                                ?>
                         </tbody>
                     </table>
                 </div>
+                <?php } ?>
             </div>
         </div>
     </div>

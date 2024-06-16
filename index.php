@@ -1,5 +1,12 @@
 <?php
 require "koneksi.php";
+
+// Fungsi untuk memformat harga
+function formatRupiah($angka)
+{
+    return number_format($angka, 0, ',', '.');
+}
+
 $queryProduk = mysqli_query($con, "SELECT id, nama, harga, foto, detail FROM produk LIMIT 6");
 
 ?>
@@ -65,14 +72,14 @@ $queryProduk = mysqli_query($con, "SELECT id, nama, harga, foto, detail FROM pro
 
     <!-- Tentang Kami -->
     <div class="container-fluid warna3 py-5">
-        <div class="container text-center accordion-body">
+        <div class="container text-center accordion-body text-light">
             <h3>Tentang Kami</h3>
-            <p class="fs-5 mt-3">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem officiis
-                repellendus
-                minima sit
-                optio magni laudantium cum minus, architecto porro accusantium molestias exercitationem sunt odio
-                laborum neque officia magnam. Quae nulla sapiente autem unde, rem error quibusdam ad nobis aspernatur,
-                dignissimos, sequi facilis recusandae. Voluptatum asperiores reprehenderit natus nulla enim.</p>
+            <p class="fs-5 mt-3">Toko Vandesu adalah pusat kebutuhan bagi para penggemar anime. Kami
+                menyediakan
+                berbagai produk berkualitas tinggi seperti baju, gantungan kunci, action figure, dan aksesoris lainnya
+                yang dirancang dengan detail tinggi. Setiap produk kami dibuat dari bahan terbaik untuk memastikan
+                kenyamanan dan kepuasan pelanggan. Toko Vandesu berdedikasi untuk menjadi toko online terdepan yang
+                menyediakan segala keperluan bagi pecinta anime dengan pelayanan pelanggan yang ramah dan responsif.</p>
         </div>
     </div>
 
@@ -91,7 +98,7 @@ $queryProduk = mysqli_query($con, "SELECT id, nama, harga, foto, detail FROM pro
                             <div class="card-body">
                                 <h4 class="card-title"><?php echo $data['nama']; ?></h4>
                                 <p class="card-text text-truncate"><?php echo $data['detail']; ?></p>
-                                <p class="card-text text-harga">Rp <?php echo $data['harga']; ?></p>
+                                <p class="card-text text-harga">Rp <?php echo formatRupiah($data['harga']); ?></p>
                                 <a href="produk-detail.php?nama=<?php echo $data['nama']; ?>" class="btn warna2 text-white">Lihat
                                     Detail</a>
                             </div>

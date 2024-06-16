@@ -1,12 +1,18 @@
 <?php
 require "koneksi.php";
+
+// Fungsi untuk memformat harga
+function formatRupiah($angka)
+{
+    return number_format($angka, 0, ',', '.');
+}
+
 $nama = htmlspecialchars($_GET['nama']);
 $queryProduk = mysqli_query($con, "SELECT * FROM produk WHERE nama = '$nama'");
 $produk = mysqli_fetch_array($queryProduk);
 
 $queryProdukTerkait = mysqli_query($con, "SELECT * FROM produk WHERE kategori_id = '$produk[kategori_id]' AND id!='$produk[id]' LIMIT 4");
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +24,12 @@ $queryProdukTerkait = mysqli_query($con, "SELECT * FROM produk WHERE kategori_id
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="fontawesome/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            padding-top: 56px;
+            /* Adjust this value based on the height of your navbar */
+        }
+    </style>
 </head>
 
 <body>
@@ -35,7 +47,7 @@ $queryProdukTerkait = mysqli_query($con, "SELECT * FROM produk WHERE kategori_id
                     <h1><?php echo $produk['nama']; ?></h1>
                     <p class="fs-5"><?php echo $produk['detail']; ?></p>
                     <p class="text-harga">
-                        Rp <?php echo $produk['harga']; ?>
+                        Rp <?php echo formatRupiah($produk['harga']); ?>
                     </p>
                     <p class="fs-5">Status Ketersediaan: <strong><?php echo $produk['ketersediaan_stok']; ?></strong>
                     </p>
@@ -51,12 +63,11 @@ $queryProdukTerkait = mysqli_query($con, "SELECT * FROM produk WHERE kategori_id
 
             <div class="row">
                 <?php while ($data = mysqli_fetch_array($queryProdukTerkait)) { ?>
-                <div class="col-md-6 col-lg-3 mb-3">
-                    <a href="produk-detail.php?nama=<?php echo $data['nama']; ?>">
-                        <img src="image/<?php echo $data['foto']; ?>"
-                            class="img-fluid img-thumbnail produk-terkait-image" alt="">
-                    </a>
-                </div>
+                    <div class="col-md-6 col-lg-3 mb-3">
+                        <a href="produk-detail.php?nama=<?php echo $data['nama']; ?>">
+                            <img src="image/<?php echo $data['foto']; ?>" class="img-fluid img-thumbnail produk-terkait-image" alt="">
+                        </a>
+                    </div>
                 <?php } ?>
             </div>
         </div>
