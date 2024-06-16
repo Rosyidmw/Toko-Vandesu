@@ -25,10 +25,31 @@ $queryProdukTerkait = mysqli_query($con, "SELECT * FROM produk WHERE kategori_id
     <link rel="stylesheet" href="fontawesome/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <style>
-        body {
-            padding-top: 56px;
-            /* Adjust this value based on the height of your navbar */
-        }
+    body {
+        padding-top: 56px;
+    }
+
+    .produk-terkait-image {
+        transition: transform 0.3s ease;
+    }
+
+    .produk-terkait-image:hover {
+        transform: scale(1.1);
+    }
+
+    .produk-terkait-image img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .produk-terkait-image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
     </style>
 </head>
 
@@ -60,14 +81,13 @@ $queryProdukTerkait = mysqli_query($con, "SELECT * FROM produk WHERE kategori_id
     <div class="container-fluid py-5 warna2">
         <div class="container">
             <h2 class="text-center text-white mb-5">Produk Terkait</h2>
-
             <div class="row">
                 <?php while ($data = mysqli_fetch_array($queryProdukTerkait)) { ?>
-                    <div class="col-md-6 col-lg-3 mb-3">
-                        <a href="produk-detail.php?nama=<?php echo $data['nama']; ?>">
-                            <img src="image/<?php echo $data['foto']; ?>" class="img-fluid img-thumbnail produk-terkait-image" alt="">
-                        </a>
-                    </div>
+                <div class="col-md-6 col-lg-3 mb-3">
+                    <a href="produk-detail.php?nama=<?php echo $data['nama']; ?>" class="produk-terkait-image">
+                        <img src="image/<?php echo $data['foto']; ?>" class="img-fluid img-thumbnail" alt="">
+                    </a>
+                </div>
                 <?php } ?>
             </div>
         </div>

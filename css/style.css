@@ -55,7 +55,7 @@ div {
 }
 
 .banner {
-    height: 60vh;
+    height: 100vh;
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(../image/banner2.jpg);
     background-size: cover;
     background-position: center;
@@ -120,7 +120,7 @@ div {
 }
 
 .content-subscribe {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: #373A40;
 }
 
 .content-subscribe a {
@@ -128,7 +128,7 @@ div {
 }
 
 .banner2 {
-    height: 30vh;
+    height: 50vh;
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(../image/banner2.jpg);
     background-size: cover;
     background-position: center;
