@@ -9,37 +9,40 @@ require "../koneksi.php";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
+    <title>Login</title>
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
-
-</head>
-
-<style>
+    <style>
     .main {
         height: 100vh;
+        background-image: url('../image/banner-login.webp');
+        background-size: cover;
+        background-position: center;
     }
 
     .login-box {
         width: 500px;
-        height: 300px;
         box-sizing: border-box;
         border-radius: 10px;
+        background: #fff;
+        padding: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 6px 6px rgba(0, 0, 0, 0.2);
+        /* Enhanced shadow */
     }
-</style>
+    </style>
+</head>
 
 <body>
 
     <div class="main d-flex flex-column justify-content-center align-items-center">
-        <div class="login-box p-5 shadow">
+        <div class="login-box shadow">
             <form action="" method="post">
-                <div>
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control" name="username" id="username">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" name="username" id="username" required>
                 </div>
-                <div>
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" name="password" id="password">
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" id="password" required>
                 </div>
                 <div>
                     <button class="btn btn-success form-control mt-3" type="submit" name="loginbtn">Login</button>
@@ -49,7 +52,6 @@ require "../koneksi.php";
 
         <div class="mt-3" style="width: 500px;">
             <?php
-
             if (isset($_POST['loginbtn'])) {
                 $username = htmlspecialchars($_POST['username']);
                 $password = htmlspecialchars($_POST['password']);
@@ -63,19 +65,12 @@ require "../koneksi.php";
                         $_SESSION['username'] = $data['username'];
                         $_SESSION['login'] = true;
                         header('location: ../adminpanel');
+                        exit();
                     } else {
-            ?>
-                        <div class="alert alert-warning" role="alert">
-                            Password salah
-                        </div>
-                    <?php
+                        echo '<div class="alert alert-warning" role="alert">Password salah</div>';
                     }
                 } else {
-                    ?>
-                    <div class="alert alert-warning" role="alert">
-                        Username Tidak Terdaftar
-                    </div>
-            <?php
+                    echo '<div class="alert alert-warning" role="alert">Username Tidak Terdaftar</div>';
                 }
             }
             ?>
