@@ -80,7 +80,7 @@ $countData = mysqli_num_rows($queryProduk);
                     <div class="col-md-4 mb-4">
                         <div class="card h-100">
                             <div class="image-box">
-                                <img src="image/<?php echo $produk['foto']; ?>" class="card-img-top" alt="...">
+                                <img src="image/produk/<?php echo $produk['foto']; ?>" class="card-img-top" alt="...">
                             </div>
                             <div class="card-body">
                                 <h4 class="card-title"><?php echo $produk['nama']; ?></h4>

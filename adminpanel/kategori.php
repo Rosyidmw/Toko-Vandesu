@@ -23,7 +23,6 @@ if (isset($_POST['simpan_kategori'])) {
         if ($querySimpan) {
             $pesan = "Kategori Berhasil Tersimpan";
             $alertType = "success";
-            // Redirect to prevent form resubmission
             header("Refresh: 2; url=kategori.php");
         } else {
             $pesan = "Gagal menyimpan kategori";
@@ -39,50 +38,47 @@ if (isset($_POST['simpan_kategori'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kategori</title>
+    <title>Admin Panel | Kategori</title>
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../fontawesome/css/fontawesome.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <style>
-    body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-    main {
-        flex: 1;
-        overflow-y: auto;
-        /* Biarkan konten dapat di-scroll jika lebih panjang dari tinggi layar */
-    }
+        main {
+            flex: 1;
+            overflow-y: auto;
+        }
 
-    .nav-link {
-        color: #FFFFFF !important;
-        padding: 10px 15px;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-        transition: color 0.3s ease, text-shadow 0.3s ease;
-        /* Added transition */
-    }
+        .nav-link {
+            color: #FFFFFF !important;
+            padding: 10px 15px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
 
-    .no-decoration {
-        text-decoration: none;
-    }
+        .no-decoration {
+            text-decoration: none;
+        }
 
-    .alert-container {
-        margin-top: 20px;
-    }
+        .alert-container {
+            margin-top: 20px;
+        }
     </style>
 </head>
 
 <body>
-
+    <!-- Navbar -->
     <?php require "navbar.php"; ?>
 
     <div class="container mt-5">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="../adminpanel/" class="no-decoration text-muted"><i
-                            class="fas fa-home"></i>Home</a></li>
+                <li class="breadcrumb-item"><a href="../adminpanel/" class="no-decoration text-muted"><i class="fas fa-home"></i> Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Kategori</li>
             </ol>
         </nav>
@@ -93,16 +89,15 @@ if (isset($_POST['simpan_kategori'])) {
                 <form action="" method="post">
                     <div class="mb-3">
                         <label for="kategori" class="form-label">Nama Kategori</label>
-                        <input type="text" name="kategori" class="form-control" placeholder="Input nama kategori"
-                            required>
+                        <input type="text" name="kategori" class="form-control" placeholder="Input nama kategori" required>
                     </div>
                     <button type="submit" class="btn btn-primary" name="simpan_kategori">Simpan</button>
                 </form>
 
                 <?php if (isset($pesan)) { ?>
-                <div class="alert alert-<?php echo $alertType; ?> alert-container mt-3" role="alert">
-                    <?php echo $pesan; ?>
-                </div>
+                    <div class="alert alert-<?php echo $alertType; ?> alert-container mt-3" role="alert">
+                        <?php echo $pesan; ?>
+                    </div>
                 <?php } ?>
             </div>
 
@@ -110,36 +105,35 @@ if (isset($_POST['simpan_kategori'])) {
                 <h3>List Kategori</h3>
 
                 <?php if ($jumlahKategori == 0) { ?>
-                <p>Data kategori tidak tersedia.</p>
+                    <p>Data kategori tidak tersedia.</p>
                 <?php } else { ?>
-                <div class="table-responsive mt-3">
-                    <table class="table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>Nama</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
+                    <div class="table-responsive mt-3">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Nama</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
                                 $nomor = 1;
                                 while ($data = mysqli_fetch_array($queryKategori)) {
                                 ?>
-                            <tr>
-                                <td><?php echo $nomor++; ?></td>
-                                <td><?php echo $data['nama']; ?></td>
-                                <td>
-                                    <a href="kategori-detail.php?id=<?php echo $data['id']; ?>" class="btn btn-info"><i
-                                            class="fas fa-search"></i></a>
-                                </td>
-                            </tr>
-                            <?php
+                                    <tr>
+                                        <td><?php echo $nomor++; ?></td>
+                                        <td><?php echo $data['nama']; ?></td>
+                                        <td>
+                                            <a href="kategori-detail.php?id=<?php echo $data['id']; ?>" class="btn btn-info"><i class="fas fa-search"></i></a>
+                                        </td>
+                                    </tr>
+                                <?php
                                 }
                                 ?>
-                        </tbody>
-                    </table>
-                </div>
+                            </tbody>
+                        </table>
+                    </div>
                 <?php } ?>
             </div>
         </div>

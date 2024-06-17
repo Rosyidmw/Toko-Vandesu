@@ -19,3 +19,40 @@
         </div>
     </div>
 </nav>
+
+<style>
+.navbar-dark .navbar-nav .nav-link {
+    color: #fff;
+    /* Warna teks link navbar */
+    transition: border-color 0.3s;
+    /* Transisi untuk efek underline */
+    position: relative;
+    /* Untuk mengatur posisi pseudo-element */
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    text-decoration: none;
+    /* Hilangkan dekorasi underline default */
+}
+
+.navbar-dark .navbar-nav .nav-link::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    /* Tinggi garis bawah */
+    background-color: #DC5F00;
+    /* Warna garis bawah */
+    position: absolute;
+    bottom: -2px;
+    /* Jarak garis bawah dari teks */
+    left: 0;
+    transition: width 0.3s ease;
+    /* Transisi untuk efek underline */
+}
+
+.navbar-dark .navbar-nav .nav-link:hover::after {
+    width: 100%;
+    /* Panjang garis bawah saat dihover */
+}
+</style>

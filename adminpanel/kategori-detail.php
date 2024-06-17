@@ -70,22 +70,22 @@ if (isset($_POST['deleteBtn'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Kategori</title>
+    <title>Admin Panel | Detail Kategori</title>
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../fontawesome/css/fontawesome.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <style>
-    body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-    main {
-        flex: 1;
-        overflow-y: auto;
-        /* Biarkan konten dapat di-scroll jika lebih panjang dari tinggi layar */
-    }
+        main {
+            flex: 1;
+            overflow-y: auto;
+            /* Biarkan konten dapat di-scroll jika lebih panjang dari tinggi layar */
+        }
     </style>
 </head>
 
@@ -99,21 +99,19 @@ if (isset($_POST['deleteBtn'])) {
             <form action="" method="post">
                 <div class="mb-3">
                     <label for="kategori" class="form-label">Kategori</label>
-                    <input type="text" name="kategori" id="kategori" class="form-control"
-                        value="<?php echo $data['nama']; ?>">
+                    <input type="text" name="kategori" id="kategori" class="form-control" value="<?php echo $data['nama']; ?>">
                 </div>
 
                 <div class="mt-5 d-flex justify-content-between">
                     <button type="submit" class="btn btn-primary" name="editBtn">Edit</button>
-                    <button type="submit" class="btn btn-danger" name="deleteBtn"
-                        onclick="return confirm('Apakah Anda yakin untuk menghapus kategori ini?')">Hapus</button>
+                    <button type="submit" class="btn btn-danger" name="deleteBtn" onclick="return confirm('Apakah Anda yakin untuk menghapus kategori ini?')">Hapus</button>
                 </div>
             </form>
 
             <?php if (isset($pesan)) { ?>
-            <div class="alert alert-<?php echo $alertType; ?> mt-3" role="alert">
-                <?php echo $pesan; ?>
-            </div>
+                <div class="alert alert-<?php echo $alertType; ?> mt-3" role="alert">
+                    <?php echo $pesan; ?>
+                </div>
             <?php } ?>
         </div>
     </div>
