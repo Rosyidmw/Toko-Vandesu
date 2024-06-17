@@ -66,17 +66,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
     }
-
-    // Proses hapus produk
-    if (isset($_POST['hapus'])) {
-        $queryHapus = mysqli_query($con, "DELETE FROM produk WHERE id = '$id'");
-        if ($queryHapus) {
-            $success_message = "Produk berhasil dihapus.";
-            header("refresh:2; url=produk.php");
-        } else {
-            $error_message = mysqli_error($con);
-        }
-    }
 }
 ?>
 
@@ -91,43 +80,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../fontawesome/css/fontawesome.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
 
-        main {
-            flex: 1;
-            overflow-y: auto;
-            /* Biarkan konten dapat di-scroll jika lebih panjang dari tinggi layar */
-        }
+    main {
+        flex: 1;
+        overflow-y: auto;
+        /* Biarkan konten dapat di-scroll jika lebih panjang dari tinggi layar */
+    }
 
-        form div {
-            margin-bottom: 10px;
-        }
+    form div {
+        margin-bottom: 10px;
+    }
     </style>
 </head>
 
 <body>
     <?php require "navbar.php"; ?>
     <div class="container mt-5">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">
+                    <a href="../adminpanel/" class="no-decoration text-muted"><i class="fas fa-home"></i> Home</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    Produk
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    Detail Produk
+                </li>
+            </ol>
+        </nav>
         <h2>Detail Produk</h2>
         <div class="col-12 col-md-6 mb-5">
             <form action="" method="post" enctype="multipart/form-data">
                 <?php if (isset($error_message)) : ?>
-                    <div class="alert alert-warning mt-3" role="alert">
-                        <?php echo $error_message; ?>
-                    </div>
+                <div class="alert alert-warning mt-3" role="alert">
+                    <?php echo $error_message; ?>
+                </div>
                 <?php endif; ?>
                 <?php if (isset($success_message)) : ?>
-                    <div class="alert alert-primary mt-3" role="alert">
-                        <?php echo $success_message; ?>
-                    </div>
+                <div class="alert alert-primary mt-3" role="alert">
+                    <?php echo $success_message; ?>
+                </div>
                 <?php endif; ?>
                 <div>
                     <label for="nama">Nama</label>
-                    <input value="<?php echo $data['nama']; ?>" type="text" id="nama" name="nama" placeholder="Input nama produk" class="form-control" autocomplete="off" required>
+                    <input value="<?php echo $data['nama']; ?>" type="text" id="nama" name="nama"
+                        placeholder="Input nama produk" class="form-control" autocomplete="off" required>
                 </div>
                 <div>
                     <label for="kategori">Kategori</label>
@@ -135,19 +138,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <option value="<?php echo $data['kategori_id']; ?>"> <?php echo $data['nama_kategori']; ?>
                         </option>
                         <?php while ($dataKategori = mysqli_fetch_array($queryKategori)) : ?>
-                            <option value="<?php echo $dataKategori['id']; ?>">
-                                <?php echo $dataKategori['nama']; ?>
-                            </option>
+                        <option value="<?php echo $dataKategori['id']; ?>">
+                            <?php echo $dataKategori['nama']; ?>
+                        </option>
                         <?php endwhile; ?>
                     </select>
                 </div>
                 <div>
                     <label for="harga">Harga</label>
-                    <input type="number" id="harga" value="<?php echo $data['harga']; ?>" name="harga" placeholder="Input harga" class="form-control" required>
+                    <input type="number" id="harga" value="<?php echo $data['harga']; ?>" name="harga"
+                        placeholder="Input harga" class="form-control" required>
                 </div>
                 <div>
                     <label for="currentFoto">Foto Produk Sekarang</label>
-                    <img src="../image/<?php echo $data['foto']; ?>" alt="" height="200px">
+                    <img src="../image/produk/<?php echo $data['foto']; ?>" alt="" height="200px">
                 </div>
                 <div>
                     <label for="foto">Foto</label>
@@ -155,7 +159,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div>
                     <label for="detail">Detail</label>
-                    <textarea name="detail" id="detail" cols="30" rows="10" class="form-control"><?php echo $data['detail']; ?></textarea>
+                    <textarea name="detail" id="detail" cols="30" rows="10"
+                        class="form-control"><?php echo $data['detail']; ?></textarea>
                 </div>
                 <div>
                     <label for="stok">Stok</label>
@@ -163,15 +168,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <option value="<?php echo $data['ketersediaan_stok']; ?>">
                             <?php echo $data['ketersediaan_stok']; ?></option>
                         <?php if ($data['ketersediaan_stok'] == 'tersedia') : ?>
-                            <option value="tersedia">Tersedia</option>;
+                        <option value="tersedia">Tersedia</option>;
                         <?php else : ?>
-                            <option value="habis">Habis</option>
+                        <option value="habis">Habis</option>
                         <?php endif; ?>
                     </select>
                 </div>
-                <div class="d-flex justify-content-between">
+                <div>
                     <button class="btn btn-primary mt-3" name="simpan" type="submit">Simpan</button>
-                    <button class="btn btn-danger mt-3" name="hapus" type="submit">Hapus</button>
+                    <a href="produk.php" class="btn btn-secondary mt-3">Batal</a>
                 </div>
             </form>
         </div>

@@ -2,26 +2,67 @@
 require "session.php";
 require "../koneksi.php";
 
+// Fungsi untuk menghapus produk
+function hapusProduk($con, $id)
+{
+    $queryHapus = mysqli_query($con, "DELETE FROM produk WHERE id = '$id'");
+    return $queryHapus;
+}
+
+// Menghapus produk jika parameter action=hapus diterima dari URL
+if (isset($_GET['action']) && $_GET['action'] == 'hapus' && isset($_GET['id'])) {
+    $id_produk = $_GET['id'];
+    $hapus = hapusProduk($con, $id_produk);
+    if ($hapus) {
+        $success_message = "Produk berhasil dihapus.";
+    } else {
+        $error_message = "Gagal menghapus produk: " . mysqli_error($con);
+    }
+}
+
+// Mendapatkan kriteria dan arah pengurutan dari URL
+$sortCriteria = isset($_GET['sort']) ? $_GET['sort'] : 'nama';
+$sortDirection = isset($_GET['direction']) ? $_GET['direction'] : 'asc';
+
 // Query untuk mengambil data produk beserta nama kategorinya
 $query = mysqli_query($con, "SELECT a.*, b.nama AS nama_kategori FROM produk a JOIN kategori b ON a.kategori_id = b.id");
 $jumlahProduk = mysqli_num_rows($query);
 
+// Menyimpan data produk dalam array
+$produkArray = [];
+while ($data = mysqli_fetch_array($query)) {
+    $produkArray[] = $data;
+}
+
+// Fungsi Bubble Sort untuk mengurutkan data produk berdasarkan kriteria yang dipilih
+function bubble_sort(&$array, $key, $direction)
+{
+    $n = count($array);
+    for ($i = 0; $i < $n; $i++) {
+        for ($j = 0; $j < $n - $i - 1; $j++) {
+            if ($direction == 'asc') {
+                if ($array[$j][$key] > $array[$j + 1][$key]) {
+                    $temp = $array[$j];
+                    $array[$j] = $array[$j + 1];
+                    $array[$j + 1] = $temp;
+                }
+            } else {
+                if ($array[$j][$key] < $array[$j + 1][$key]) {
+                    $temp = $array[$j];
+                    $array[$j] = $array[$j + 1];
+                    $array[$j + 1] = $temp;
+                }
+            }
+        }
+    }
+}
+
+// Mengurutkan data produk berdasarkan kriteria yang dipilih
+bubble_sort($produkArray, $sortCriteria, $sortDirection);
+
 // Query untuk mengambil daftar kategori
 $queryKategori = mysqli_query($con, "SELECT * FROM kategori");
-
-// Fungsi untuk menghasilkan string acak
-function generateRandomString($length = 10)
-{
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $charactersLength = strlen($characters);
-    $randomString = '';
-    for ($i = 0; $i < $length; $i++) {
-        $randomString .= $characters[rand(0, $charactersLength - 1)];
-    }
-    return $randomString;
-}
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,31 +74,49 @@ function generateRandomString($length = 10)
     <link rel="stylesheet" href="../fontawesome/css/fontawesome.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
 
-        main {
-            flex: 1;
-            overflow-y: auto;
-            /* Biarkan konten dapat di-scroll jika lebih panjang dari tinggi layar */
-        }
+    css Copy code main {
+        flex: 1;
+        overflow-y: auto;
+    }
 
-        .no-decoration {
-            text-decoration: none;
-        }
+    .no-decoration {
+        text-decoration: none;
+    }
 
-        form div {
-            margin-bottom: 10px;
-        }
+    form div {
+        margin-bottom: 10px;
+    }
+
+    d-flex {
+        display: flex;
+    }
+
+    .align-items-center {
+        align-items: center;
+    }
+
+    .justify-content-between {
+        justify-content: space-between;
+    }
+
+    .me-2 {
+        margin-right: 0.5rem;
+    }
+
+    .form-select {
+        width: auto;
+    }
     </style>
 </head>
 
 <body>
     <?php require "navbar.php"; ?>
-
     <div class="container mt-5">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -70,117 +129,42 @@ function generateRandomString($length = 10)
             </ol>
         </nav>
 
-        <!-- Form Tambah Produk -->
-        <div class="my-5 col-12 col-md-6">
-            <h3>Tambah Produk</h3>
-
-            <form action="" method="post" enctype="multipart/form-data">
-                <div class="mb-3">
-                    <label for="nama">Nama</label>
-                    <input type="text" id="nama" name="nama" placeholder="Input nama produk" class="form-control" autocomplete="off" required>
-                </div>
-                <div class="mb-3">
-                    <label for="kategori">Kategori</label>
-                    <select name="kategori" class="form-control" required>
-                        <option value="">Pilih Kategori</option>
-                        <?php while ($data = mysqli_fetch_array($queryKategori)) { ?>
-                            <option value="<?php echo $data['id']; ?>"><?php echo $data['nama']; ?></option>
-                        <?php } ?>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="harga">Harga</label>
-                    <input type="number" id="harga" name="harga" placeholder="Input harga" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label for="foto">Foto</label>
-                    <input type="file" id="foto" name="foto" class="form-control">
-                </div>
-                <div class="mb-3">
-                    <label for="detail">Detail</label>
-                    <textarea name="detail" id="detail" cols="30" rows="5" class="form-control"></textarea>
-                </div>
-                <div class="mb-3">
-                    <label for="ketersediaan_stok">Ketersediaan Stok</label>
-                    <select id="ketersediaan_stok" name="ketersediaan_stok" class="form-control">
-                        <option value="tersedia">Tersedia</option>
-                        <option value="habis">Habis</option>
-                    </select>
-                </div>
-                <div>
-                    <button class="btn btn-primary" name="simpan" type="submit">Simpan</button>
-                </div>
-            </form>
-
-            <?php
-            // Proses simpan produk
-            if (isset($_POST['simpan'])) {
-                $nama = htmlspecialchars($_POST['nama']);
-                $kategori = htmlspecialchars($_POST['kategori']);
-                $harga = htmlspecialchars($_POST['harga']);
-                $detail = htmlspecialchars($_POST['detail']);
-                $ketersediaan_stok = htmlspecialchars($_POST['ketersediaan_stok']);
-
-                // Proses upload foto
-                $target_dir = "../image/produk/";
-                $nama_file = basename($_FILES["foto"]["name"]);
-                $target_file = $target_dir . $nama_file;
-                $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-                // Validasi input
-                if ($nama == "" || $kategori == "" || $harga == "") {
-            ?>
-                    <div class="alert alert-warning mt-3" role="alert">
-                        Nama, Kategori, Harga wajib diisi
-                    </div>
-                    <?php
-                } else {
-                    // Proses upload foto jika ada
-                    if ($nama_file != '') {
-                        $image_size = $_FILES["foto"]["size"];
-                        if ($image_size > 5000000) {
-                    ?>
-                            <div class="alert alert-warning mt-3" role="alert">
-                                File tidak boleh lebih dari 500 Kb
-                            </div>
-                            <?php
-                        } else {
-                            if ($imageFileType != "jpg" && $imageFileType != "jpeg" && $imageFileType != "png" && $imageFileType != "gif") {
-                            ?>
-                                <div class="alert alert-warning mt-3" role="alert">
-                                    File wajib bertipe jpg, jpeg, png, atau gif
-                                </div>
-                        <?php
-                            } else {
-                                // Jika semua valid, pindahkan file ke direktori yang ditentukan
-                                $random_name = generateRandomString(20);
-                                $new_name = $random_name . "." . $imageFileType;
-                                move_uploaded_file($_FILES["foto"]["tmp_name"], $target_dir . $new_name);
-                            }
-                        }
-                    }
-
-                    // Query Insert produk ke database
-                    $queryTambah = mysqli_query($con, "INSERT INTO produk (kategori_id, nama, harga, foto, detail, ketersediaan_stok) VALUES ('$kategori', '$nama', '$harga', '$new_name', '$detail', '$ketersediaan_stok')");
-
-                    if ($queryTambah) {
-                        ?>
-                        <div class="alert alert-primary mt-3" role="alert">
-                            Produk Berhasil Tersimpan
-                        </div>
-                        <meta http-equiv="refresh" content="2; url=produk.php" />
-            <?php
-                    } else {
-                        echo mysqli_error($con);
-                    }
-                }
-            }
-            ?>
-        </div>
-
         <!-- Daftar Produk -->
         <div class="mt-5 mb-5">
             <h2>List Produk</h2>
+            <p>Jumlah produk: <?php echo $jumlahProduk; ?></p>
+
+            <!-- Bagian Dropdown dan Tombol Tambah Produk -->
+            <div class="my-3 d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                    <label for="sortCriteria" class="me-2">Kategori:</label>
+                    <select id="sortCriteria" class="form-select me-2" onchange="sortProducts()">
+                        <option value="nama" <?php if ($sortCriteria == 'nama') echo 'selected'; ?>>Nama</option>
+                        <option value="harga" <?php if ($sortCriteria == 'harga') echo 'selected'; ?>>Harga</option>
+                        <option value="nama_kategori" <?php if ($sortCriteria == 'nama_kategori') echo 'selected'; ?>>
+                            Kategori</option>
+                        <option value="ketersediaan_stok"
+                            <?php if ($sortCriteria == 'ketersediaan_stok') echo 'selected'; ?>>Stok</option>
+                    </select>
+                    <label for="sortDirection" class="me-2">Sort by:</label>
+                    <i class="fa-solid fa-sort" id="sortIcon" onclick="toggleSortDirection()"></i>
+                </div>
+                <div>
+                    <a href="tambah-produk.php" class="btn btn-success"><i class="fas fa-plus-circle me-2"></i>Tambah
+                        Produk</a>
+                </div>
+            </div>
+
+            <!-- Pesan Sukses atau Error -->
+            <?php if (isset($success_message)) : ?>
+            <div class="alert alert-primary" role="alert">
+                <?php echo $success_message; ?>
+            </div>
+            <?php elseif (isset($error_message)) : ?>
+            <div class="alert alert-danger" role="alert">
+                <?php echo $error_message; ?>
+            </div>
+            <?php endif; ?>
 
             <div class="table-responsive mt-5">
                 <table class="table">
@@ -198,24 +182,29 @@ function generateRandomString($length = 10)
                         <?php
                         if ($jumlahProduk == 0) {
                         ?>
-                            <tr>
-                                <td colspan="6" class="text-center">Data produk tidak tersedia</td>
-                            </tr>
-                            <?php
+                        <tr>
+                            <td colspan="6" class="text-center">Data produk tidak tersedia</td>
+                        </tr>
+                        <?php
                         } else {
                             $nomor = 1;
-                            while ($data = mysqli_fetch_array($query)) {
+                            foreach ($produkArray as $data) {
                             ?>
-                                <tr>
-                                    <td><?php echo $nomor; ?></td>
-                                    <td><?php echo $data['nama']; ?></td>
-                                    <td><?php echo $data['nama_kategori']; ?></td>
-                                    <td>Rp. <?php echo number_format($data['harga']); ?></td>
-                                    <td><?php echo $data['ketersediaan_stok']; ?></td>
-                                    <td>
-                                        <a href="produk-detail.php?id=<?php echo $data['id']; ?>" class="btn btn-info"><i class="fas fa-search"></i></a>
-                                    </td>
-                                </tr>
+                        <tr>
+                            <td><?php echo $nomor; ?></td>
+                            <td><?php echo $data['nama']; ?></td>
+                            <td><?php echo $data['nama_kategori']; ?></td>
+                            <td>Rp. <?php echo number_format($data['harga']); ?></td>
+                            <td><?php echo $data['ketersediaan_stok']; ?></td>
+                            <td>
+                                <a href="produk-detail.php?id=<?php echo $data['id']; ?>" class="btn btn-info btn-sm"><i
+                                        class="fa-solid fa-pen me-1"></i>Ubah</a>
+                                <a href="produk.php?action=hapus&id=<?php echo $data['id']; ?>"
+                                    class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Anda yakin ingin menghapus produk ini?');"><i
+                                        class="fa-solid fa-trash me-1"></i>Hapus</a>
+                            </td>
+                        </tr>
                         <?php
                                 $nomor++;
                             }
@@ -231,6 +220,34 @@ function generateRandomString($length = 10)
     <?php require "footer.php"; ?>
     <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../fontawesome/js/all.min.js"></script>
+    <script>
+    function sortProducts() {
+        const criteria = document.getElementById('sortCriteria').value;
+        const direction = document.getElementById('sortIcon').classList.contains('asc') ? 'asc' : 'desc';
+        window.location.href = `produk.php?sort=${criteria}&direction=${direction}`;
+    }
+
+    function toggleSortDirection() {
+        const sortIcon = document.getElementById('sortIcon');
+        if (sortIcon.classList.contains('asc')) {
+            sortIcon.classList.remove('asc');
+            sortIcon.classList.add('desc');
+        } else {
+            sortIcon.classList.remove('desc');
+            sortIcon.classList.add('asc');
+        }
+        sortProducts();
+    }
+
+    // Set default sort direction
+    const currentDirection = "<?php echo $sortDirection; ?>";
+    const sortIcon = document.getElementById('sortIcon');
+    if (currentDirection === 'asc') {
+        sortIcon.classList.add('asc');
+    } else {
+        sortIcon.classList.add('desc');
+    }
+    </script>
 </body>
 
 </html>
