@@ -51,13 +51,7 @@ Berikut ini adalah para pembuat website yang berkontribusi:
 1. Muhammad Samudra (2211104062)
 2. Rosyid Mukti Wibowo (2211104076)
 3. Muhammad Hadziq Subono (2211104079)
-4. Adhitya Sofwan Al-Rasyid (2211104079)
-
-Pastikan untuk mengikuti [kode etik kami](CODE_OF_CONDUCT.md) dan menghormati [lisensi proyek ini](LICENSE.md).
-
-## Lisensi
-
-Proyek ini dilisensikan di bawah [MIT License](LICENSE.md). Lihat file LICENSE.md untuk lebih banyak detail.
+4. Adhitya Sofwan Al-Rasyid (2211104089)
 
 ## Kontak
 
