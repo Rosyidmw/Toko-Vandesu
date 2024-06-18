@@ -203,23 +203,6 @@ div {
     transition: transform 0.3s ease, color 0.3s ease;
 }
 
-.social-link:hover {
-    transform: scale(1.2);
-    color: #FFD4BE;
-}
-
-.social-link:hover .fa-instagram {
-    color: #C13584;
-}
-
-.social-link:hover .fa-tiktok {
-    color: #69C9D0;
-}
-
-.social-link:hover .fa-whatsapp {
-    color: #25D366;
-}
-
 .element-animasi {
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
