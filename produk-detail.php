@@ -11,7 +11,7 @@ $nama = htmlspecialchars($_GET['nama']);
 $queryProduk = mysqli_query($con, "SELECT * FROM produk WHERE nama = '$nama'");
 $produk = mysqli_fetch_array($queryProduk);
 
-$queryProdukTerkait = mysqli_query($con, "SELECT * FROM produk WHERE kategori_id = '$produk[kategori_id]' AND id!='$produk[id]' LIMIT 4");
+$queryProdukTerkait = mysqli_query($con, "SELECT * FROM produk WHERE kategori_id = '$produk[kategori_id]' AND id != '$produk[id]' LIMIT 4");
 ?>
 
 <!DOCTYPE html>
@@ -25,31 +25,22 @@ $queryProdukTerkait = mysqli_query($con, "SELECT * FROM produk WHERE kategori_id
     <link rel="stylesheet" href="fontawesome/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <style>
-        body {
-            padding-top: 56px;
-        }
+    body {
+        padding-top: 56px;
+    }
 
-        .produk-terkait-image {
-            transition: transform 0.3s ease;
-        }
+    .produk-card .card {
+        transition: transform 0.3s ease;
+    }
 
-        .produk-terkait-image:hover {
-            transform: scale(1.1);
-        }
+    .produk-card .card:hover {
+        transform: scale(1.05);
+    }
 
-        .produk-terkait-image img {
-            height: 100%;
-            width: 100%;
-            object-fit: cover;
-            object-position: center;
-        }
-
-        .produk-terkait-image {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-        }
+    .produk-card .card img {
+        height: 200px;
+        object-fit: cover;
+    }
     </style>
 </head>
 
@@ -81,13 +72,20 @@ $queryProdukTerkait = mysqli_query($con, "SELECT * FROM produk WHERE kategori_id
     <div class="container-fluid py-5 warna2">
         <div class="container">
             <h2 class="text-center text-white mb-5">Produk Terkait</h2>
-            <div class="row">
+            <div class="row produk-card">
                 <?php while ($data = mysqli_fetch_array($queryProdukTerkait)) { ?>
-                    <div class="col-md-6 col-lg-3 mb-3">
-                        <a href="produk-detail.php?nama=<?php echo $data['nama']; ?>" class="produk-terkait-image">
-                            <img src="image/produk/<?php echo $data['foto']; ?>" class="img-fluid img-thumbnail" alt="">
-                        </a>
+                <div class="col-md-6 col-lg-3 mb-3">
+                    <div class="card h-100">
+                        <img src="image/produk/<?php echo $data['foto']; ?>" class="card-img-top" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo $data['nama']; ?></h5>
+                            <p class="card-text text-truncate"><?php echo $data['detail']; ?></p>
+                            <p class="card-text text-harga">Rp <?php echo formatRupiah($data['harga']); ?></p>
+                            <a href="produk-detail.php?nama=<?php echo $data['nama']; ?>"
+                                class="btn warna2 text-white">Lihat Detail</a>
+                        </div>
                     </div>
+                </div>
                 <?php } ?>
             </div>
         </div>

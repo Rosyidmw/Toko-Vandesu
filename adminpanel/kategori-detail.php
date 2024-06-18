@@ -101,11 +101,11 @@ if (isset($_POST['deleteBtn'])) {
                     <label for="kategori" class="form-label">Kategori</label>
                     <input type="text" name="kategori" id="kategori" class="form-control" value="<?php echo $data['nama']; ?>">
                 </div>
-
-                <div class="mt-5 d-flex justify-content-between">
-                    <button type="submit" class="btn btn-primary" name="editBtn">Edit</button>
-                    <button type="submit" class="btn btn-danger" name="deleteBtn" onclick="return confirm('Apakah Anda yakin untuk menghapus kategori ini?')">Hapus</button>
+                <div>
+                    <button class="btn btn-primary mt-3" name="editBtn" type="submit">Simpan</button>
+                    <a href="kategori.php" class="btn btn-secondary mt-3">Batal</a>
                 </div>
+
             </form>
 
             <?php if (isset($pesan)) { ?>

@@ -2,6 +2,26 @@
 require "session.php";
 require "../koneksi.php";
 
+// Fungsi untuk menghapus kategori
+function hapusKategori($con, $id)
+{
+    $queryHapus = mysqli_query($con, "DELETE FROM kategori WHERE id = '$id'");
+    return $queryHapus;
+}
+
+// Menghapus kategori jika parameter action=hapus diterima dari URL
+if (isset($_GET['action']) && $_GET['action'] == 'hapus' && isset($_GET['id'])) {
+    $id_kategori = $_GET['id'];
+    $hapus = hapusKategori($con, $id_kategori);
+    if ($hapus) {
+        $pesan = "Kategori berhasil dihapus.";
+        $alertType = "success";
+    } else {
+        $pesan = "Gagal menghapus kategori: " . mysqli_error($con);
+        $alertType = "danger";
+    }
+}
+
 // Query untuk mengambil semua kategori
 $queryKategori = mysqli_query($con, "SELECT * FROM kategori");
 $jumlahKategori = mysqli_num_rows($queryKategori);
@@ -124,8 +144,9 @@ if (isset($_POST['simpan_kategori'])) {
                                     <tr>
                                         <td><?php echo $nomor++; ?></td>
                                         <td><?php echo $data['nama']; ?></td>
-                                        <td>
-                                            <a href="kategori-detail.php?id=<?php echo $data['id']; ?>" class="btn btn-info"><i class="fas fa-search"></i></a>
+                                        <td class="d-flex gap-2">
+                                            <a href="kategori-detail.php?id=<?php echo $data['id']; ?>" class="btn btn-info btn-sm"><i class="fa-solid fa-pen me-1"></i>Ubah</a>
+                                            <a href="kategori.php?action=hapus&id=<?php echo $data['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Anda yakin ingin menghapus kategori ini?');"><i class="fa-solid fa-trash me-1"></i>Hapus</a>
                                         </td>
                                     </tr>
                                 <?php
