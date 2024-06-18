@@ -30,6 +30,7 @@ $countData = mysqli_num_rows($queryProduk);
 
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,11 +42,11 @@ $countData = mysqli_num_rows($queryProduk);
     <link rel="stylesheet" href="fontawesome/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <style>
-        .card:hover {
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-            transform: translateY(-5px);
-            transition: all 0.3s ease;
-        }
+    .card:hover {
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+        transform: translateY(-5px);
+        transition: all 0.3s ease;
+    }
     </style>
 </head>
 
@@ -67,14 +68,26 @@ $countData = mysqli_num_rows($queryProduk);
                 <h3>Kategori</h3>
                 <ul class="list-group">
                     <?php while ($Kategori = mysqli_fetch_array($queryKategori)) { ?>
-                        <a class="no-decoration" href="produk.php?kategori=<?php echo urlencode($Kategori['nama']); ?>">
-                            <li class="list-group-item"><?php echo $Kategori['nama']; ?></li>
-                        </a>
+                    <a class="no-decoration" href="produk.php?kategori=<?php echo urlencode($Kategori['nama']); ?>">
+                        <li class="list-group-item"><?php echo $Kategori['nama']; ?></li>
+                    </a>
                     <?php } ?>
                 </ul>
             </div>
+
+            <!-- Produk -->
             <div class="col-lg-9">
                 <h3 class="text-center mb-3">Produk</h3>
+
+                <!-- Search Bar -->
+                <form class="mb-4" method="GET" action="produk.php">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Ketikkan nama produk" name="keyword"
+                            value="<?php echo isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : ''; ?>">
+                        <button class="btn btn-outline-secondary" type="submit"><i
+                                class="fa-solid fa-magnifying-glass me-1"></i></button>
+                    </div>
+                </form>
 
                 <?php
                 if ($countData < 1) {
@@ -85,20 +98,21 @@ $countData = mysqli_num_rows($queryProduk);
                 <div class="row">
 
                     <?php while ($produk = mysqli_fetch_array($queryProduk)) { ?>
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100">
-                                <div class="image-box">
-                                    <img src="image/produk/<?php echo $produk['foto']; ?>" class="card-img-top" alt="...">
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title"><?php echo $produk['nama']; ?></h4>
-                                    <p class="card-text text-truncate"><?php echo $produk['detail']; ?></p>
-                                    <p class="card-text text-harga">Rp <?php echo formatRupiah($produk['harga']); ?></p>
-                                    <a href="produk-detail.php?nama=<?php echo urlencode($produk['nama']); ?>" class="btn warna2 text-white">Lihat
-                                        Detail</a>
-                                </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="image-box">
+                                <img src="image/produk/<?php echo $produk['foto']; ?>" class="card-img-top" alt="...">
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title"><?php echo $produk['nama']; ?></h4>
+                                <p class="card-text text-truncate"><?php echo $produk['detail']; ?></p>
+                                <p class="card-text text-harga">Rp <?php echo formatRupiah($produk['harga']); ?></p>
+                                <a href="produk-detail.php?nama=<?php echo urlencode($produk['nama']); ?>"
+                                    class="btn warna2 text-white">Lihat
+                                    Detail</a>
                             </div>
                         </div>
+                    </div>
                     <?php } ?>
 
                 </div>

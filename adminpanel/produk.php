@@ -25,7 +25,14 @@ $sortCriteria = isset($_GET['sort']) ? $_GET['sort'] : 'nama';
 $sortDirection = isset($_GET['direction']) ? $_GET['direction'] : 'asc';
 
 // Query untuk mengambil data produk beserta nama kategorinya
-$query = mysqli_query($con, "SELECT a.*, b.nama AS nama_kategori FROM produk a JOIN kategori b ON a.kategori_id = b.id");
+if (isset($_GET['keyword'])) {
+    $keyword = $_GET['keyword'];
+    $query = mysqli_query($con, "SELECT a.*, b.nama AS nama_kategori FROM produk a JOIN kategori b ON a.kategori_id = b.id WHERE a.nama LIKE '%$keyword%'");
+} else {
+    $query = mysqli_query($con, "SELECT a.*, b.nama AS nama_kategori FROM produk a JOIN kategori b ON a.kategori_id = b.id");
+}
+
+// Menghitung jumlah produk
 $jumlahProduk = mysqli_num_rows($query);
 
 // Menyimpan data produk dalam array
@@ -59,10 +66,8 @@ function bubble_sort(&$array, $key, $direction)
 
 // Mengurutkan data produk berdasarkan kriteria yang dipilih
 bubble_sort($produkArray, $sortCriteria, $sortDirection);
-
-// Query untuk mengambil daftar kategori
-$queryKategori = mysqli_query($con, "SELECT * FROM kategori");
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -80,7 +85,7 @@ $queryKategori = mysqli_query($con, "SELECT * FROM kategori");
         min-height: 100vh;
     }
 
-    css Copy code main {
+    main {
         flex: 1;
         overflow-y: auto;
     }
@@ -93,7 +98,7 @@ $queryKategori = mysqli_query($con, "SELECT * FROM kategori");
         margin-bottom: 10px;
     }
 
-    d-flex {
+    .d-flex {
         display: flex;
     }
 
@@ -133,6 +138,16 @@ $queryKategori = mysqli_query($con, "SELECT * FROM kategori");
         <div class="mt-5 mb-5">
             <h2>List Produk</h2>
             <p>Jumlah produk: <?php echo $jumlahProduk; ?></p>
+
+            <!-- Form Pencarian -->
+            <form action="produk.php" method="GET" class="my-3">
+                <div class="input-group">
+                    <input type="search" class="form-control" placeholder="Ketikkan nama produk"
+                        aria-label="Cari produk" aria-describedby="button-addon2" name="keyword">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i
+                            class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+            </form>
 
             <!-- Bagian Dropdown dan Tombol Tambah Produk -->
             <div class="my-3 d-flex align-items-center justify-content-between">
@@ -194,7 +209,7 @@ $queryKategori = mysqli_query($con, "SELECT * FROM kategori");
                             <td><?php echo $nomor; ?></td>
                             <td><?php echo $data['nama']; ?></td>
                             <td><?php echo $data['nama_kategori']; ?></td>
-                            <td>Rp. <?php echo number_format($data['harga']); ?></td>
+                            <td>Rp <?php echo number_format($data['harga'], 0, ',', '.'); ?></td>
                             <td><?php echo $data['ketersediaan_stok']; ?></td>
                             <td>
                                 <a href="produk-detail.php?id=<?php echo $data['id']; ?>" class="btn btn-info btn-sm"><i
