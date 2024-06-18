@@ -1,0 +1,11 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # Sesuaikan dengan path direktori proyek Anda
+    RewriteBase /Toko-Vandesu/
+
+    # Aturan untuk halaman dengan parameter mod
+    RewriteRule ^([a-zA-Z0-9-]+)$ page.php?mod=$1 [L]
+
+    # Aturan untuk halaman detail dengan parameter id
+    RewriteRule ^detail/([^/]+)/?$ page.php?mod=detail&id=$1 [L]
+</IfModule>
