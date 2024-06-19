@@ -100,9 +100,9 @@ div {
 
 .banner {
     height: 100vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(../image/banner.jpg);
-    background-size: cover;
-    background-position: center;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../image/pixel-art-bongo-piano.gif);
+    /* background-size: contain;
+    background-position: center; */
 }
 
 .highlighted-kategori {
@@ -169,7 +169,7 @@ div {
 
 .banner2 {
     height: 50vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(../image/banner.jpg);
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../image/pixel-art-bongo-piano.gif);
     background-size: cover;
     background-position: center;
 }

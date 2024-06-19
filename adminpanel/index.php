@@ -23,35 +23,35 @@ $jumlahProduk = mysqli_num_rows($queryProduk);
 </head>
 
 <style>
-    body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
-    main {
-        flex: 1;
-        overflow-y: auto;
-        /* Biarkan konten dapat di-scroll jika lebih panjang dari tinggi layar */
-    }
+main {
+    flex: 1;
+    overflow-y: auto;
+    /* Biarkan konten dapat di-scroll jika lebih panjang dari tinggi layar */
+}
 
-    .kotak {
-        border: solid;
-    }
+.kotak {
+    border: solid;
+}
 
-    .summary-kategori {
-        background-color: #0a6b4a;
-        border-radius: 15px;
-    }
+.summary-kategori {
+    background-color: #0a6b4a;
+    border-radius: 15px;
+}
 
-    .summary-produk {
-        background-color: #0a516b;
-        border-radius: 15px;
-    }
+.summary-produk {
+    background-color: #0a516b;
+    border-radius: 15px;
+}
 
-    .no-decoration {
-        text-decoration: none;
-    }
+.no-decoration {
+    text-decoration: none;
+}
 </style>
 
 <body>
@@ -65,7 +65,7 @@ $jumlahProduk = mysqli_num_rows($queryProduk);
                 </li>
             </ol>
         </nav>
-        <h2>Selamat datang <?php echo $_SESSION['username']; ?> !</h2>
+        <h2>Selamat Datang <?php echo $_SESSION['username']; ?> !</h2>
 
         <div class="container mt-5">
             <div class="row">

@@ -42,23 +42,23 @@ $loginMessage = handleLogin($con);
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <style>
     .main {
         height: 100vh;
-        background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(../image/banner-login.webp);
-        background-size: cover;
-        background-position: center;
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(../image/pixel-art-bongo-piano.gif);
     }
 
     .login-box {
         width: 500px;
         box-sizing: border-box;
         border-radius: 10px;
-        background: #fff;
+        background: rgb(255, 255, 255);
         padding: 20px;
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 6px 6px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(100px);
     }
 
     .form-outline {
@@ -109,12 +109,11 @@ $loginMessage = handleLogin($con);
     }
 </style>
 
-
 <body>
     <div class="main d-flex flex-column justify-content-center align-items-center">
         <div class="login-box shadow">
             <form action="" method="post">
-                <h2 class="text-center mb-3">Vandesu Admin</h2>
+                <h2 class="text-center mb-3">Vandesu Admin<i class="fa-solid fa-paw ms-2"></i></h2>
 
                 <div class="form-outline mb-3">
                     <input type="text" class="form-control" name="username" id="username" required>

@@ -23,13 +23,10 @@ $queryKategori = mysqli_query($con, "SELECT id, nama FROM kategori");
     <link rel="stylesheet" href="fontawesome/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <style>
-        /* CSS untuk memberikan margin bawah antara produk */
         .produk-col {
             margin-bottom: 1rem;
-            /* 1 rem = 16px */
         }
 
-        /* CSS untuk efek hover pada produk */
         .card:hover {
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
             transform: translateY(-5px);
